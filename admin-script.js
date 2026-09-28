@@ -1,6 +1,6 @@
 const SUPABASE_URL = 'https://jspagidgtuvuyjodgnze.supabase.co'; // GANTI INI (SAMA DENGAN SCRIPT.JS)
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzcGFnaWRndHV2dXlqb2RnbnplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2MTkxNzUsImV4cCI6MjEwNjE5NTE3NX0.HDK5qVb6w6Qq0SiU-613jL740oSImMJsjAysxaLZLtw'; // GANTI INI (SAMA DENGAN SCRIPT.JS)
-const ADMIN_PASSWORD = "admin123";
+const ADMIN_PASSWORD = "agust";
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
