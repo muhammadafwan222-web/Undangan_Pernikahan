@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Wedding</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="login-overlay">
+        <div class="login-box">
+            <h2><i class="fas fa-lock"></i> Admin Access</h2>
+            <input type="password" id="admin-password" placeholder="Masukkan Password">
+            <button onclick="checkPassword()">Login</button>
+            <p id="login-error" class="error-msg"></p>
+        </div>
+    </div>
+
+    <div id="admin-dashboard" class="hidden">
+        <header class="admin-header">
+            <h1><i class="fas fa-cog"></i> Pengaturan Undangan</h1>
+            <button onclick="logout()" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </header>
+
+        <div class="admin-container">
+            <section class="form-section">
+                <h3><i class="fas fa-heart"></i> Mempelai</h3>
+                <div class="form-group"><label>Nama Panggilan Pria</label><input type="text" id="adm-groom-name"></div>
+                <div class="form-group"><label>Nama Lengkap Pria</label><input type="text" id="adm-groom-fullname"></div>
+                <div class="form-group"><label>Orang Tua Pria</label><input type="text" id="adm-groom-parents"></div>
+                <hr>
+                <div class="form-group"><label>Nama Panggilan Wanita</label><input type="text" id="adm-bride-name"></div>
+                <div class="form-group"><label>Nama Lengkap Wanita</label><input type="text" id="adm-bride-fullname"></div>
+                <div class="form-group"><label>Orang Tua Wanita</label><input type="text" id="adm-bride-parents"></div>
+            </section>
+
+            <section class="form-section">
+                <h3><i class="fas fa-calendar-check"></i> Acara</h3>
+                <div class="form-group"><label>Tanggal (YYYY-MM-DD)</label><input type="date" id="adm-event-date"></div>
+                <div class="form-group"><label>Jam</label><input type="time" id="adm-event-time"></div>
+                <div class="form-group"><label>Tempat</label><input type="text" id="adm-venue"></div>
+                <div class="form-group"><label>Alamat</label><textarea id="adm-address"></textarea></div>
+                <div class="form-group"><label>Link Google Maps</label><input type="url" id="adm-maps-url"></div>
+            </section>
+
+            <section class="form-section">
+                <h3><i class="fas fa-music"></i> Lainnya</h3>
+                <div class="form-group"><label>Link Musik MP3</label><input type="url" id="adm-music-src"></div>
+                <div class="form-group"><label>Warna Tema</label><input type="color" id="adm-primary-color"></div>
+                <div class="form-group"><label>Nomor WA RSVP (628...)</label><input type="text" id="adm-wa-number"></div>
+            </section>
+
+            <div class="action-buttons">
+                <button onclick="saveConfig()" class="btn-save"><i class="fas fa-save"></i> Simpan ke Database</button>
+                <button onclick="previewInvitation()" class="btn-preview"><i class="fas fa-eye"></i> Lihat Undangan</button>
+            </div>
+        </div>
+    </div>
+    <script src="admin-script.js"></script>
+</body>
+</html>
