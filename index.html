@@ -3,24 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Undangan Pernikahan</title>
-    <meta name="description" content="Undangan Pernikahan Digital">
+    <title>Undangan Pernikahan Aspiyanor & Radina</title>
+    <meta name="description" content="Undangan Pernikahan Aspiyanor bin H. Supiani & Radina binti Supiani">
     
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ============================================
-           CSS - STYLING UNDANGAN PERNIKAHAN
-           ============================================ */
         :root {
-            --primary: #b8860b;
-            --primary-light: #d4a574;
-            --secondary: #f5e6d3;
+            --primary: #8B6914;
+            --primary-light: #C9A961;
+            --secondary: #F5E6D3;
             --dark: #2c2c2c;
             --text: #4a4a4a;
             --white: #ffffff;
@@ -29,7 +26,6 @@
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         html { scroll-behavior: smooth; }
         
         body {
@@ -42,11 +38,11 @@
         
         .hidden { display: none !important; }
         
-        /* Loading Screen */
+        /* Loading */
         #loading {
             position: fixed;
             inset: 0;
-            background: linear-gradient(135deg, #f5e6d3 0%, #fff 100%);
+            background: linear-gradient(135deg, #F5E6D3 0%, #fff 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -86,7 +82,7 @@
             border: none;
             cursor: pointer;
             font-size: 20px;
-            box-shadow: 0 4px 15px rgba(184,134,11,0.4);
+            box-shadow: 0 4px 15px rgba(139,105,20,0.4);
             z-index: 100;
             transition: var(--transition);
             display: flex;
@@ -98,11 +94,11 @@
         .music-btn.playing { animation: pulse 2s infinite; }
         
         @keyframes pulse {
-            0%, 100% { box-shadow: 0 4px 15px rgba(184,134,11,0.4); }
-            50% { box-shadow: 0 4px 25px rgba(184,134,11,0.8); }
+            0%, 100% { box-shadow: 0 4px 15px rgba(139,105,20,0.4); }
+            50% { box-shadow: 0 4px 25px rgba(139,105,20,0.8); }
         }
         
-        /* Hero Section */
+        /* Hero */
         .hero {
             min-height: 100vh;
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
@@ -123,6 +119,13 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        .bismillah {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
         .hero-subtitle {
             font-size: 1rem;
             letter-spacing: 4px;
@@ -134,15 +137,31 @@
         .hero-title {
             font-family: 'Great Vibes', cursive;
             font-size: clamp(3rem, 8vw, 6rem);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            line-height: 1.2;
+        }
+        
+        .hero-ampersand {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: var(--primary-light);
+            margin: 10px 0;
         }
         
         .hero-date {
             font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            margin-bottom: 40px;
+            font-size: 1.2rem;
+            margin: 20px 0 10px;
             letter-spacing: 2px;
+        }
+        
+        .hero-hijriah {
+            font-family: 'Amiri', serif;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            font-style: italic;
         }
         
         .btn-open {
@@ -156,13 +175,13 @@
             transition: var(--transition);
             font-family: 'Poppins', sans-serif;
             letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(184,134,11,0.4);
+            box-shadow: 0 4px 15px rgba(139,105,20,0.4);
         }
         
         .btn-open:hover {
             background: var(--primary-light);
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(184,134,11,0.6);
+            box-shadow: 0 6px 20px rgba(139,105,20,0.6);
         }
         
         .scroll-hint {
@@ -182,7 +201,6 @@
         
         /* Sections */
         section { padding: 80px 20px; }
-        
         .container { max-width: 1100px; margin: 0 auto; }
         
         .section-title {
@@ -278,7 +296,7 @@
         
         .person-fullname {
             font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             margin-bottom: 10px;
             color: var(--dark);
@@ -357,6 +375,14 @@
             font-size: 1.05rem;
         }
         
+        .hijriah-date {
+            font-family: 'Amiri', serif;
+            font-size: 1rem;
+            color: var(--primary);
+            font-style: italic;
+            margin-top: 5px;
+        }
+        
         /* Countdown */
         .countdown {
             text-align: center;
@@ -432,6 +458,79 @@
         .btn-maps:hover {
             background: var(--primary-light);
             transform: translateY(-2px);
+        }
+        
+        /* Amplop Digital */
+        .amplop-section {
+            background: linear-gradient(135deg, #fff9f0 0%, #fff 100%);
+            text-align: center;
+        }
+        
+        .amplop-card {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--primary-light);
+        }
+        
+        .amplop-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .amplop-card h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .amplop-card p {
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+        
+        .dana-box {
+            background: var(--secondary);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .dana-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
+        }
+        
+        .btn-copy {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 25px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            margin-top: 15px;
+        }
+        
+        .btn-copy:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        
+        .btn-copy.copied {
+            background: #27ae60;
         }
         
         /* RSVP */
@@ -676,6 +775,8 @@
             .time-box span { font-size: 1.5rem; }
             
             .admin-header { flex-direction: column; gap: 10px; }
+            
+            .bismillah { font-size: 1.5rem; }
         }
         
         /* Scroll Reveal */
@@ -710,11 +811,17 @@
     <!-- ==================== HERO ==================== -->
     <section class="hero" id="hero">
         <div class="hero-content">
+            <p class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
             <p class="hero-subtitle">The Wedding Of</p>
             <h1 class="hero-title">
-                <span id="hero-groom">Mempelai Pria</span> & <span id="hero-bride">Mempelai Wanita</span>
+                <span id="hero-groom">Aspiyanor</span>
             </h1>
-            <p class="hero-date" id="hero-date">Sabtu, 25 Desember 2026</p>
+            <p class="hero-ampersand">&</p>
+            <h1 class="hero-title">
+                <span id="hero-bride">Radina</span>
+            </h1>
+            <p class="hero-date" id="hero-date">Sabtu, 25 Oktober 2026</p>
+            <p class="hero-hijriah" id="hero-hijriah">13-14 Jumadil Awal 1448 H</p>
             <button class="btn-open" id="btn-open">
                 <i class="fas fa-envelope-open"></i> Buka Undangan
             </button>
@@ -735,7 +842,7 @@
                     <p class="quote-source" id="quote-source">QS. Ar-Rum: 21</p>
                 </div>
                 <p class="opening-text reveal" id="opening-text">
-                    Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami.
+                    Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan putra-putri kami.
                 </p>
             </div>
         </section>
@@ -746,19 +853,19 @@
                 <h2 class="section-title reveal">Mempelai</h2>
                 <div class="couple-wrapper">
                     <div class="person reveal">
-                        <img src="https://ui-avatars.com/api/?name=Pria&background=b8860b&color=fff&size=200" 
+                        <img src="https://ui-avatars.com/api/?name=Aspiyanor&background=8B6914&color=fff&size=200" 
                              alt="Mempelai Pria" class="person-photo" id="groom-photo">
-                        <h3 class="person-name" id="groom-name">Mempelai Pria</h3>
-                        <p class="person-fullname" id="groom-fullname">Nama Lengkap Pria</p>
-                        <p class="person-parents">Putra dari<br><strong id="groom-parents">Orang Tua Pria</strong></p>
+                        <h3 class="person-name" id="groom-name">Aspiyanor</h3>
+                        <p class="person-fullname" id="groom-fullname">Aspiyanor bin H. Supiani</p>
+                        <p class="person-parents">Putra dari<br><strong id="groom-parents">H. Supiani</strong></p>
                     </div>
                     <div class="heart-divider reveal"><i class="fas fa-heart"></i></div>
                     <div class="person reveal">
-                        <img src="https://ui-avatars.com/api/?name=Wanita&background=b8860b&color=fff&size=200" 
+                        <img src="https://ui-avatars.com/api/?name=Radina&background=8B6914&color=fff&size=200" 
                              alt="Mempelai Wanita" class="person-photo" id="bride-photo">
-                        <h3 class="person-name" id="bride-name">Mempelai Wanita</h3>
-                        <p class="person-fullname" id="bride-fullname">Nama Lengkap Wanita</p>
-                        <p class="person-parents">Putri dari<br><strong id="bride-parents">Orang Tua Wanita</strong></p>
+                        <h3 class="person-name" id="bride-name">Radina</h3>
+                        <p class="person-fullname" id="bride-fullname">Radina binti Supiani</p>
+                        <p class="person-parents">Putri dari<br><strong id="bride-parents">Supiani</strong></p>
                     </div>
                 </div>
             </div>
@@ -774,22 +881,23 @@
                             <div class="info-icon"><i class="fas fa-calendar-alt"></i></div>
                             <div class="info-content">
                                 <h4>Tanggal</h4>
-                                <p id="event-date">Sabtu, 25 Desember 2026</p>
+                                <p id="event-date">Sabtu, 25 Oktober 2026</p>
+                                <p class="hijriah-date" id="event-hijriah">13-14 Jumadil Awal 1448 H</p>
                             </div>
                         </div>
                         <div class="info-item">
                             <div class="info-icon"><i class="fas fa-clock"></i></div>
                             <div class="info-content">
                                 <h4>Waktu</h4>
-                                <p id="event-time">10:00 WIB - Selesai</p>
+                                <p id="event-time">Pukul 10:00 WITA - Selesai</p>
                             </div>
                         </div>
                         <div class="info-item">
                             <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
                             <div class="info-content">
                                 <h4>Lokasi</h4>
-                                <p id="event-venue">Nama Tempat</p>
-                                <p id="event-address" style="font-size:0.9rem; opacity:0.8;">Alamat</p>
+                                <p id="event-venue">Rumah Kediaman</p>
+                                <p id="event-address">RT 5, Desa Darussalam, Kec. Danau Panggang, Kab. Hulu Sungai Utara (HSU), Kalimantan Selatan</p>
                             </div>
                         </div>
                     </div>
@@ -818,12 +926,32 @@
             </div>
         </section>
 
+        <!-- Amplop Digital -->
+        <section class="amplop-section">
+            <div class="container">
+                <h2 class="section-title reveal">Amplop Digital</h2>
+                <div class="amplop-card reveal">
+                    <div class="amplop-icon"><i class="fas fa-gift"></i></div>
+                    <h3>Doa Restu Anda Merupakan Karunia yang Sangat Berarti</h3>
+                    <p>Namun jika Anda ingin memberikan tanda kasih, dapat melalui:</p>
+                    <div class="dana-box">
+                        <p style="margin-bottom:10px; font-size:0.9rem;">DANA</p>
+                        <p class="dana-number" id="dana-number">0813-5604-5723</p>
+                        <p style="margin-top:10px; font-size:0.85rem; color:#666;">a.n. Aspiyanor</p>
+                    </div>
+                    <button class="btn-copy" id="btn-copy-dana" onclick="copyDana()">
+                        <i class="fas fa-copy"></i> Salin Nomor DANA
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <!-- RSVP -->
         <section>
             <div class="container">
                 <h2 class="section-title reveal">Konfirmasi Kehadiran</h2>
                 <div class="rsvp-card reveal">
-                    <p>Kehadiran Anda merupakan kehormatan dan kebahagiaan bagi kami. Mohon konfirmasi kehadiran Anda melalui WhatsApp.</p>
+                    <p>Kehadiran Anda merupakan kehormatan dan kebahagiaan bagi kami. Mohon konfirmasi kehadiran Anda.</p>
                     <a href="#" id="wa-link" target="_blank" class="btn-wa">
                         <i class="fab fa-whatsapp"></i> Konfirmasi via WhatsApp
                     </a>
@@ -835,7 +963,7 @@
         <footer>
             <p class="footer-text">Terima kasih atas doa dan restunya</p>
             <p class="footer-couple">
-                <span id="footer-groom">Pria</span> & <span id="footer-bride">Wanita</span>
+                <span id="footer-groom">Aspiyanor</span> & <span id="footer-bride">Radina</span>
             </p>
             <p class="footer-copy">&copy; 2026 Wedding Invitation. Made with <i class="fas fa-heart" style="color:#e74c3c;"></i></p>
         </footer>
@@ -844,36 +972,40 @@
     <!-- ==================== JAVASCRIPT ==================== -->
     <script>
     /* ============================================
-       KONFIGURASI - EDIT DI SINI
+       KONFIGURASI - DATA SUDAH DIISI
        ============================================ */
     const CONFIG = {
         // Supabase (kosongkan jika tidak pakai)
-       const SUPABASE_URL = 'https://jspagidgtuvuyjodgnze.supabase.co'; // GANTI INI (SAMA DENGAN SCRIPT.JS)
-       const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzcGFnaWRndHV2dXlqb2RnbnplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2MTkxNzUsImV4cCI6MjEwNjE5NTE3NX0.HDK5qVb6w6Qq0SiU-613jL740oSImMJsjAysxaLZLtw'; // GANTI INI (SAMA DENGAN SCRIPT.JS)
-
+        SUPABASE_URL: 'https://jspagidgtuvuyjodgnze.supabase.co',
+        SUPABASE_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzcGFnaWRndHV2dXlqb2RnbnplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2MTkxNzUsImV4cCI6MjEwNjE5NTE3NX0.HDK5qVb6w6Qq0SiU-613jL740oSImMJsjAysxaLZLtw',
         
         // Password Admin Panel
         ADMIN_PASSWORD: 'admin123',
         
-        // Data Default (akan dipakai jika Supabase kosong)
+        // Data Pernikahan
         DEFAULT: {
-            groom_name: 'Ahmad',
-            groom_fullname: 'Ahmad Rizki Pratama, S.T.',
-            groom_parents: 'Bapak Budi Santoso & Ibu Siti Aminah',
-            bride_name: 'Siti',
-            bride_fullname: 'Siti Nurhaliza Putri, S.Pd.',
-            bride_parents: 'Bapak Ahmad Hidayat & Ibu Fatimah Zahra',
-            event_date: '2026-12-25',
-            event_time: '10:00 WIB - Selesai',
-            venue: 'Gedung Serba Guna Jakarta',
-            address: 'Jl. Jend. Sudirman No. 123, Jakarta Pusat 10220',
-            maps_url: 'https://maps.google.com/maps?q=-6.2088,106.8456',
+            groom_name: 'Aspiyanor',
+            groom_fullname: 'Aspiyanor bin H. Supiani',
+            groom_parents: 'H. Supiani',
+            bride_name: 'Radina',
+            bride_fullname: 'Radina binti Supiani',
+            bride_parents: 'Supiani',
+            event_date: '2026-10-25',
+            event_hijriah: '13-14 Jumadil Awal 1448 H',
+            event_time: 'Pukul 10:00 WITA - Selesai',
+            venue: 'Rumah Kediaman',
+            address: 'RT 5, Desa Darussalam, Kec. Danau Panggang, Kab. Hulu Sungai Utara (HSU), Kalimantan Selatan',
+            maps_url: 'https://maps.google.com/maps?q=Desa+Darussalam+Danau+Panggang+HSU',
+            maps_lat: -2.3167,
+            maps_lng: 115.2167,
             music_src: '',
-            primary_color: '#b8860b',
-            wa_number: '6281234567890',
+            primary_color: '#8B6914',
+            wa_number: '6281356045723',
+            dana_number: '081356045723',
+            dana_name: 'Aspiyanor',
             quote_text: 'Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang.',
             quote_source: 'QS. Ar-Rum: 21',
-            opening_text: 'Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami.'
+            opening_text: 'Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan putra-putri kami.'
         }
     };
 
@@ -883,7 +1015,6 @@
     let supabase = null;
     let currentData = null;
 
-    // Inisialisasi Supabase jika ada konfigurasi
     if (CONFIG.SUPABASE_URL && CONFIG.SUPABASE_KEY) {
         try {
             supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
@@ -892,7 +1023,6 @@
         }
     }
 
-    // Format tanggal Indonesia
     function formatDate(dateStr) {
         if (!dateStr) return '';
         const date = new Date(dateStr);
@@ -900,7 +1030,6 @@
         return date.toLocaleDateString('id-ID', options);
     }
 
-    // Ambil data dari Supabase atau default
     async function loadData() {
         if (supabase) {
             try {
@@ -922,16 +1051,14 @@
         return CONFIG.DEFAULT;
     }
 
-    // Render data ke HTML
     function render(data) {
         currentData = data;
         
-        // Hero
         document.getElementById('hero-groom').textContent = data.groom_name || 'Pria';
         document.getElementById('hero-bride').textContent = data.bride_name || 'Wanita';
         document.getElementById('hero-date').textContent = formatDate(data.event_date);
+        document.getElementById('hero-hijriah').textContent = data.event_hijriah || '';
         
-        // Couple
         document.getElementById('groom-name').textContent = data.groom_name || '';
         document.getElementById('groom-fullname').textContent = data.groom_fullname || '';
         document.getElementById('groom-parents').textContent = data.groom_parents || '';
@@ -939,19 +1066,17 @@
         document.getElementById('bride-fullname').textContent = data.bride_fullname || '';
         document.getElementById('bride-parents').textContent = data.bride_parents || '';
         
-        // Update foto dengan inisial nama
         document.getElementById('groom-photo').src = 
-            `https://ui-avatars.com/api/?name=${encodeURIComponent(data.groom_name || 'Pria')}&background=b8860b&color=fff&size=200`;
+            `https://ui-avatars.com/api/?name=${encodeURIComponent(data.groom_name || 'Pria')}&background=8B6914&color=fff&size=200`;
         document.getElementById('bride-photo').src = 
-            `https://ui-avatars.com/api/?name=${encodeURIComponent(data.bride_name || 'Wanita')}&background=b8860b&color=fff&size=200`;
+            `https://ui-avatars.com/api/?name=${encodeURIComponent(data.bride_name || 'Wanita')}&background=8B6914&color=fff&size=200`;
         
-        // Event
         document.getElementById('event-date').textContent = formatDate(data.event_date);
+        document.getElementById('event-hijriah').textContent = data.event_hijriah || '';
         document.getElementById('event-time').textContent = data.event_time || '';
         document.getElementById('event-venue').textContent = data.venue || '';
         document.getElementById('event-address').textContent = data.address || '';
         
-        // Map
         if (data.maps_url) {
             document.getElementById('maps-link').href = data.maps_url;
             const addr = data.address || data.venue || '';
@@ -959,42 +1084,40 @@
                 `https://www.google.com/maps?q=${encodeURIComponent(addr)}&output=embed`;
         }
         
-        // RSVP
         if (data.wa_number) {
             const msg = `Assalamualaikum, saya ingin mengkonfirmasi kehadiran di pernikahan ${data.groom_name} & ${data.bride_name}`;
             document.getElementById('wa-link').href = 
                 `https://wa.me/${data.wa_number}?text=${encodeURIComponent(msg)}`;
         }
         
-        // Quote & Opening
+        if (data.dana_number) {
+            const formatted = data.dana_number.replace(/(\d{4})(?=\d)/g, '$1-');
+            document.getElementById('dana-number').textContent = formatted;
+        }
+        
         if (data.quote_text) document.getElementById('quote-text').textContent = `"${data.quote_text}"`;
         if (data.quote_source) document.getElementById('quote-source').textContent = data.quote_source;
         if (data.opening_text) document.getElementById('opening-text').textContent = data.opening_text;
         
-        // Footer
         document.getElementById('footer-groom').textContent = data.groom_name || '';
         document.getElementById('footer-bride').textContent = data.bride_name || '';
         
-        // Theme color
         if (data.primary_color) {
             document.documentElement.style.setProperty('--primary', data.primary_color);
         }
         
-        // Music
         if (data.music_src) {
             const audio = document.getElementById('bg-music');
             audio.src = data.music_src;
             document.getElementById('music-btn').classList.remove('hidden');
         }
         
-        // Countdown
         startCountdown(data.event_date);
     }
 
-    // Countdown Timer
     function startCountdown(dateStr) {
         if (!dateStr) return;
-        const target = new Date(dateStr).getTime();
+        const target = new Date(dateStr + 'T10:00:00+08:00').getTime();
         
         function update() {
             const now = Date.now();
@@ -1022,13 +1145,24 @@
         setInterval(update, 1000);
     }
 
-    // Buka Undangan
+    function copyDana() {
+        const number = currentData?.dana_number || CONFIG.DEFAULT.dana_number;
+        navigator.clipboard.writeText(number).then(() => {
+            const btn = document.getElementById('btn-copy-dana');
+            btn.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-copy"></i> Salin Nomor DANA';
+                btn.classList.remove('copied');
+            }, 2000);
+        });
+    }
+
     document.getElementById('btn-open').addEventListener('click', function() {
         document.getElementById('main-content').classList.remove('hidden');
         document.getElementById('hero').style.display = 'none';
         window.scrollTo({ top: 0, behavior: 'smooth' });
         
-        // Auto play music
         const audio = document.getElementById('bg-music');
         if (audio.src && audio.src !== window.location.href) {
             audio.play().then(() => {
@@ -1037,11 +1171,9 @@
             }).catch(() => {});
         }
         
-        // Trigger reveal animations
         setTimeout(initReveal, 100);
     });
 
-    // Music Toggle
     document.getElementById('music-btn').addEventListener('click', function() {
         const audio = document.getElementById('bg-music');
         const icon = this.querySelector('i');
@@ -1057,7 +1189,6 @@
         }
     });
 
-    // Scroll Reveal Animation
     function initReveal() {
         const reveals = document.querySelectorAll('.reveal');
         const observer = new IntersectionObserver((entries) => {
@@ -1071,7 +1202,6 @@
         reveals.forEach(el => observer.observe(el));
     }
 
-    // Hide Loading
     function hideLoading() {
         const loading = document.getElementById('loading');
         loading.style.opacity = '0';
@@ -1079,7 +1209,7 @@
     }
 
     /* ============================================
-       ADMIN PANEL (Akses via #admin di URL)
+       ADMIN PANEL
        ============================================ */
     function checkAdminAccess() {
         if (window.location.hash === '#admin') {
@@ -1123,7 +1253,7 @@
         panel.innerHTML = `
             <div class="admin-content">
                 <div class="admin-header">
-                    <h1><i class="fas fa-cog"></i> Admin Panel - Pengaturan Undangan</h1>
+                    <h1><i class="fas fa-cog"></i> Admin Panel</h1>
                     <button class="btn-admin btn-close" onclick="closeAdmin()">
                         <i class="fas fa-times"></i> Tutup
                     </button>
@@ -1131,86 +1261,42 @@
 
                 <div class="admin-section">
                     <h3><i class="fas fa-heart"></i> Mempelai Pria</h3>
-                    <div class="form-group">
-                        <label>Nama Panggilan</label>
-                        <input type="text" id="adm-groom-name">
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Lengkap</label>
-                        <input type="text" id="adm-groom-fullname">
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Orang Tua</label>
-                        <input type="text" id="adm-groom-parents">
-                    </div>
+                    <div class="form-group"><label>Nama Panggilan</label><input type="text" id="adm-groom-name"></div>
+                    <div class="form-group"><label>Nama Lengkap</label><input type="text" id="adm-groom-fullname"></div>
+                    <div class="form-group"><label>Nama Orang Tua</label><input type="text" id="adm-groom-parents"></div>
                 </div>
 
                 <div class="admin-section">
                     <h3><i class="fas fa-heart"></i> Mempelai Wanita</h3>
-                    <div class="form-group">
-                        <label>Nama Panggilan</label>
-                        <input type="text" id="adm-bride-name">
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Lengkap</label>
-                        <input type="text" id="adm-bride-fullname">
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Orang Tua</label>
-                        <input type="text" id="adm-bride-parents">
-                    </div>
+                    <div class="form-group"><label>Nama Panggilan</label><input type="text" id="adm-bride-name"></div>
+                    <div class="form-group"><label>Nama Lengkap</label><input type="text" id="adm-bride-fullname"></div>
+                    <div class="form-group"><label>Nama Orang Tua</label><input type="text" id="adm-bride-parents"></div>
                 </div>
 
                 <div class="admin-section">
                     <h3><i class="fas fa-calendar"></i> Detail Acara</h3>
-                    <div class="form-group">
-                        <label>Tanggal (YYYY-MM-DD)</label>
-                        <input type="date" id="adm-event-date">
-                    </div>
-                    <div class="form-group">
-                        <label>Waktu</label>
-                        <input type="text" id="adm-event-time" placeholder="10:00 WIB - Selesai">
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Tempat</label>
-                        <input type="text" id="adm-venue">
-                    </div>
-                    <div class="form-group">
-                        <label>Alamat Lengkap</label>
-                        <textarea id="adm-address"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Link Google Maps</label>
-                        <input type="url" id="adm-maps-url">
-                    </div>
+                    <div class="form-group"><label>Tanggal (YYYY-MM-DD)</label><input type="date" id="adm-event-date"></div>
+                    <div class="form-group"><label>Tanggal Hijriah</label><input type="text" id="adm-event-hijriah"></div>
+                    <div class="form-group"><label>Waktu</label><input type="text" id="adm-event-time"></div>
+                    <div class="form-group"><label>Nama Tempat</label><input type="text" id="adm-venue"></div>
+                    <div class="form-group"><label>Alamat Lengkap</label><textarea id="adm-address"></textarea></div>
+                    <div class="form-group"><label>Link Google Maps</label><input type="url" id="adm-maps-url"></div>
+                </div>
+
+                <div class="admin-section">
+                    <h3><i class="fas fa-gift"></i> Amplop Digital</h3>
+                    <div class="form-group"><label>Nomor DANA</label><input type="text" id="adm-dana-number"></div>
+                    <div class="form-group"><label>Atas Nama</label><input type="text" id="adm-dana-name"></div>
                 </div>
 
                 <div class="admin-section">
                     <h3><i class="fas fa-palette"></i> Tampilan & Lainnya</h3>
-                    <div class="form-group">
-                        <label>Warna Tema (Hex)</label>
-                        <input type="color" id="adm-primary-color">
-                    </div>
-                    <div class="form-group">
-                        <label>Link Musik MP3 (opsional)</label>
-                        <input type="url" id="adm-music-src" placeholder="https://...">
-                    </div>
-                    <div class="form-group">
-                        <label>Nomor WhatsApp (628...)</label>
-                        <input type="text" id="adm-wa-number">
-                    </div>
-                    <div class="form-group">
-                        <label>Kutipan/Quote</label>
-                        <textarea id="adm-quote-text"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Sumber Kutipan</label>
-                        <input type="text" id="adm-quote-source">
-                    </div>
-                    <div class="form-group">
-                        <label>Pesan Pembuka</label>
-                        <textarea id="adm-opening-text"></textarea>
-                    </div>
+                    <div class="form-group"><label>Warna Tema (Hex)</label><input type="color" id="adm-primary-color"></div>
+                    <div class="form-group"><label>Link Musik MP3</label><input type="url" id="adm-music-src"></div>
+                    <div class="form-group"><label>Nomor WhatsApp (628...)</label><input type="text" id="adm-wa-number"></div>
+                    <div class="form-group"><label>Kutipan/Quote</label><textarea id="adm-quote-text"></textarea></div>
+                    <div class="form-group"><label>Sumber Kutipan</label><input type="text" id="adm-quote-source"></div>
+                    <div class="form-group"><label>Pesan Pembuka</label><textarea id="adm-opening-text"></textarea></div>
                 </div>
 
                 <div class="admin-actions">
@@ -1239,11 +1325,14 @@
         document.getElementById('adm-bride-fullname').value = d.bride_fullname || '';
         document.getElementById('adm-bride-parents').value = d.bride_parents || '';
         document.getElementById('adm-event-date').value = d.event_date || '';
+        document.getElementById('adm-event-hijriah').value = d.event_hijriah || '';
         document.getElementById('adm-event-time').value = d.event_time || '';
         document.getElementById('adm-venue').value = d.venue || '';
         document.getElementById('adm-address').value = d.address || '';
         document.getElementById('adm-maps-url').value = d.maps_url || '';
-        document.getElementById('adm-primary-color').value = d.primary_color || '#b8860b';
+        document.getElementById('adm-dana-number').value = d.dana_number || '';
+        document.getElementById('adm-dana-name').value = d.dana_name || '';
+        document.getElementById('adm-primary-color').value = d.primary_color || '#8B6914';
         document.getElementById('adm-music-src').value = d.music_src || '';
         document.getElementById('adm-wa-number').value = d.wa_number || '';
         document.getElementById('adm-quote-text').value = d.quote_text || '';
@@ -1260,10 +1349,13 @@
             bride_fullname: document.getElementById('adm-bride-fullname').value,
             bride_parents: document.getElementById('adm-bride-parents').value,
             event_date: document.getElementById('adm-event-date').value,
+            event_hijriah: document.getElementById('adm-event-hijriah').value,
             event_time: document.getElementById('adm-event-time').value,
             venue: document.getElementById('adm-venue').value,
             address: document.getElementById('adm-address').value,
             maps_url: document.getElementById('adm-maps-url').value,
+            dana_number: document.getElementById('adm-dana-number').value,
+            dana_name: document.getElementById('adm-dana-name').value,
             primary_color: document.getElementById('adm-primary-color').value,
             music_src: document.getElementById('adm-music-src').value,
             wa_number: document.getElementById('adm-wa-number').value,
@@ -1274,7 +1366,6 @@
 
         let saved = false;
         
-        // Coba simpan ke Supabase
         if (supabase) {
             try {
                 const { error } = await supabase
@@ -1286,7 +1377,6 @@
             }
         }
         
-        // Fallback: LocalStorage
         if (!saved) {
             localStorage.setItem('weddingConfig', JSON.stringify(newData));
             saved = true;
@@ -1295,9 +1385,9 @@
         if (saved) {
             currentData = { ...currentData, ...newData };
             render(currentData);
-            alert('✅ Berhasil disimpan! Perubahan langsung terlihat.');
+            alert('✅ Berhasil disimpan!');
         } else {
-            alert('❌ Gagal menyimpan. Periksa konfigurasi Supabase.');
+            alert('❌ Gagal menyimpan.');
         }
     }
 
@@ -1322,7 +1412,6 @@
         checkAdminAccess();
     });
 
-    // Listen hash change untuk admin
     window.addEventListener('hashchange', checkAdminAccess);
     </script>
 
