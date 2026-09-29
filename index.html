@@ -12,9 +12,6 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        /* =========================================
-           TEMA & VARIABEL (Bisa diubah via Admin)
-           ========================================= */
         :root {
             --primary: #8B6914;
             --primary-light: #C9A961;
@@ -41,6 +38,27 @@
         .cover-title { font-family: 'Great Vibes', cursive; font-size: clamp(3rem, 8vw, 5rem); margin: 10px 0; }
         .cover-names { font-family: 'Playfair Display', serif; font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 10px; }
         .cover-date { font-size: 1.1rem; opacity: 0.9; margin-bottom: 40px; }
+        
+        /* Style Khusus Nama Tamu */
+        #guest-name-container {
+            margin: 20px 0 30px 0;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        #guest-name-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            margin-top: 5px;
+            display: block;
+            color: var(--primary-light);
+            text-transform: capitalize;
+        }
+
         .btn-open {
             padding: 15px 40px; background: var(--primary); color: white; border: none; border-radius: 50px;
             font-size: 1rem; cursor: pointer; font-family: 'Poppins', sans-serif; letter-spacing: 1px;
@@ -130,7 +148,13 @@
         <p>The Wedding Of</p>
         <h1 class="cover-title">Aspiyanor & Radina</h1>
         <p class="cover-date">Sabtu, 25 Oktober 2026 | 13-14 Jumadil Awal 1448 H</p>
-        <p style="margin-bottom: 30px; font-size: 0.9rem;">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+        
+        <!-- BAGIAN NAMA TAMU (Dinamis) -->
+        <div id="guest-name-container">
+            Kepada Yth. Bapak/Ibu/Saudara/i
+            <span id="guest-name-display">Tamu Undangan</span>
+        </div>
+
         <button class="btn-open" onclick="openInvitation()">
             <i class="fas fa-envelope-open"></i> Buka Undangan
         </button>
@@ -243,7 +267,7 @@
             </div>
             <div class="form-group">
                 <label>Link Musik Latar (URL .mp3)</label>
-                <input type="text" id="adm-music" placeholder="https://drive.google.com/uc?export=download&id=1XZIrv5ien1nLJMciz3jGUusQANMtyhUc">
+                <input type="text" id="adm-music" placeholder="https://example.com/musik.mp3">
                 <small style="color:#666">*Kosongkan jika tidak ada musik</small>
             </div>
             <div class="form-group">
@@ -274,7 +298,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         // ==========================================
-        // 1. KONFIGURASI PUSAT (EDIT DI SINI ATAU VIA ADMIN)
+        // 1. KONFIGURASI PUSAT
         // ==========================================
         let CONFIG = {
             groom: { name: "Aspiyanor", full: "Aspiyanor bin H. Supiani", parent: "H. Supiani" },
@@ -288,12 +312,32 @@
             dana: "081356045723",
             danaName: "Aspiyanor",
             wa: "6281356045723",
-            music: "https://drive.google.com/uc?export=download&id=1XZIrv5ien1nLJMciz3jGUusQANMtyhUc",
+            music: "https://drive.google.com/uc?export=download&id=1XZIrv5ien1nLJMciz3jGUusQANMtyhUc", // Link musik sudah dimasukkan
             themeColor: "#8B6914"
         };
 
         // ==========================================
-        // 2. FUNGSI RENDER (Menampilkan Data ke Layar)
+        // 2. FUNGSI NAMA TAMU OTOMATIS (URL PARAMETER)
+        // ==========================================
+        function loadGuestName() {
+            // Ambil parameter 'to' dari URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const guestName = urlParams.get('to');
+            
+            const displayElement = document.getElementById('guest-name-display');
+            
+            if (guestName) {
+                // Format nama (huruf pertama kapital)
+                const formattedName = guestName.replace(/\b\w/g, l => l.toUpperCase());
+                displayElement.textContent = formattedName;
+            } else {
+                // Jika tidak ada parameter '?to=', tampilkan default
+                displayElement.textContent = "Bapak/Ibu/Saudara/i";
+            }
+        }
+
+        // ==========================================
+        // 3. FUNGSI RENDER (Menampilkan Data ke Layar)
         // ==========================================
         function render() {
             document.getElementById('text-groom-name').textContent = CONFIG.groom.name;
@@ -322,10 +366,8 @@
             document.getElementById('footer-groom').textContent = CONFIG.groom.name;
             document.getElementById('footer-bride').textContent = CONFIG.bride.name;
 
-            // Terapkan Warna Tema
             document.documentElement.style.setProperty('--primary', CONFIG.themeColor);
 
-            // Setup Musik
             if (CONFIG.music) {
                 document.getElementById('bg-music').src = CONFIG.music;
                 document.getElementById('music-toggle').style.display = 'flex';
@@ -333,21 +375,19 @@
         }
 
         // ==========================================
-        // 3. INTERAKSI UI (Buka Undangan, Musik, Copy)
+        // 4. INTERAKSI UI
         // ==========================================
         function openInvitation() {
             document.getElementById('cover-screen').classList.add('open');
             document.getElementById('main-content').classList.add('visible');
             
-            // Putar musik jika ada
             const audio = document.getElementById('bg-music');
             if (CONFIG.music) {
                 audio.play().then(() => {
                     document.getElementById('music-toggle').classList.add('playing');
-                }).catch(e => console.log("Autoplay dicegah browser, user harus klik tombol musik manual."));
+                }).catch(e => console.log("Autoplay dicegah browser."));
             }
             
-            // Aktifkan animasi scroll
             setTimeout(() => AOS.init({ duration: 800, once: true }), 500);
         }
 
@@ -367,7 +407,6 @@
             navigator.clipboard.writeText(CONFIG.dana).then(() => alert('Nomor DANA berhasil disalin!'));
         }
 
-        // Countdown Timer
         function updateCountdown() {
             const target = new Date('2026-10-25T10:00:00+08:00').getTime();
             const diff = target - Date.now();
@@ -382,10 +421,9 @@
         updateCountdown();
 
         // ==========================================
-        // 4. ADMIN PANEL LOGIC
+        // 5. ADMIN PANEL LOGIC
         // ==========================================
         function openAdmin() {
-            // Isi form dengan data CONFIG saat ini
             document.getElementById('adm-primary').value = CONFIG.themeColor;
             document.getElementById('adm-music').value = CONFIG.music;
             document.getElementById('adm-dana').value = CONFIG.dana;
@@ -405,9 +443,8 @@
             CONFIG.dana = document.getElementById('adm-dana').value;
             CONFIG.wa = document.getElementById('adm-wa').value;
             
-            render(); // Update tampilan langsung
+            render();
             
-            // Reset musik jika berubah
             const audio = document.getElementById('bg-music');
             if (CONFIG.music) {
                 audio.src = CONFIG.music;
@@ -433,8 +470,13 @@
             alert('Kode berhasil disalin! Silakan tempel (paste) kode ini menggantikan bagian "let CONFIG = {...}" di file index.html Anda, lalu Commit di GitHub.');
         }
 
-        // Inisialisasi awal
-        render();
+        // ==========================================
+        // 6. INISIALISASI SAAT HALAMAN DIMUAT
+        // ==========================================
+        window.addEventListener('DOMContentLoaded', () => {
+            loadGuestName(); // Panggil fungsi nama tamu
+            render();
+        });
     </script>
 </body>
 </html>
