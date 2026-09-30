@@ -74,14 +74,42 @@
         .form-group label { display: block; font-size: 0.9rem; margin-bottom: 6px; font-weight: 500; color: var(--primary-dark); }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px; border: 1px solid #e0d0b8; border-radius: 10px; font-family: var(--font-base); font-size: 0.95rem; background: rgba(255,255,255,0.8); transition: all 0.3s; }
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(139,105,20,0.15); }
+        .form-group input[type="file"] { padding: 10px; background: #f9f9f9; font-size: 0.85rem; }
 
         .music-btn { position: fixed; bottom: 25px; right: 25px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: 2px solid var(--primary-light); cursor: pointer; font-size: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 100; display: none; align-items: center; justify-content: center; }
         .music-btn.playing { animation: spin 4s linear infinite; }
 
-        .countdown { display: flex; justify-content: center; gap: 12px; margin: 12px 0; flex-wrap: wrap; }
-        .countdown-item { background: linear-gradient(100deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; padding: 10px 5px; border-radius: 12px; min-width: 50px; box-shadow: 0 4px 10px rgba(139,105,20,0.3); }
-        .countdown-item .number { font-size: 1rem; font-weight: 500; display: block; font-family: var(--font-heading); }
+        .countdown { display: flex; justify-content: center; gap: 12px; margin: 25px 0; flex-wrap: wrap; }
+        .countdown-item { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; padding: 15px 10px; border-radius: 12px; min-width: 70px; box-shadow: 0 4px 10px rgba(139,105,20,0.3); }
+        .countdown-item .number { font-size: 1.6rem; font-weight: 700; display: block; font-family: var(--font-heading); }
         .countdown-item .text { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; }
+
+        /* KARTU UNDANGAN PEMBUKA */
+        #invitation-card {
+            position: fixed; inset: 0; background: linear-gradient(135deg, rgba(139,105,20,0.95), rgba(92,70,13,0.95));
+            z-index: 99998; display: flex; justify-content: center; align-items: center; padding: 20px;
+            opacity: 1; transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        #invitation-card.hidden { opacity: 0; transform: scale(0.9); pointer-events: none; }
+        .card-content {
+            background: white; padding: 40px 30px; border-radius: 20px; max-width: 400px; width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center; position: relative;
+            animation: cardSlideIn 0.8s ease;
+        }
+        @keyframes cardSlideIn { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .card-ornament { position: absolute; width: 60px; height: 60px; border: 2px solid var(--primary-light); opacity: 0.5; }
+        .card-ornament.tl { top: 10px; left: 10px; border-right: none; border-bottom: none; border-radius: 10px 0 0 0; }
+        .card-ornament.tr { top: 10px; right: 10px; border-left: none; border-bottom: none; border-radius: 0 10px 0 0; }
+        .card-ornament.bl { bottom: 10px; left: 10px; border-right: none; border-top: none; border-radius: 0 0 0 10px; }
+        .card-ornament.br { bottom: 10px; right: 10px; border-left: none; border-top: none; border-radius: 0 0 10px 0; }
+        .card-bismillah { font-family: var(--font-arabic); font-size: 1.8rem; color: var(--primary); margin-bottom: 15px; }
+        .card-title { font-family: var(--font-heading); font-size: 1.2rem; color: var(--text-color); margin-bottom: 10px; }
+        .card-couple { font-family: var(--font-accent); font-size: 2.5rem; color: var(--primary); margin: 15px 0; }
+        .card-guest-label { font-size: 0.9rem; color: #666; margin-bottom: 5px; }
+        .card-guest-name { font-family: var(--font-accent); font-size: 1.8rem; color: var(--primary); margin-bottom: 20px; }
+        .card-date { font-size: 0.95rem; color: var(--text-color); margin-bottom: 25px; }
+        .btn-open-card { background: var(--primary); color: white; border: none; padding: 12px 30px; border-radius: 50px; font-size: 1rem; cursor: pointer; transition: 0.3s; }
+        .btn-open-card:hover { background: var(--primary-dark); transform: translateY(-2px); }
 
         /* ADMIN PANEL STYLES */
         #admin-modal, #admin-login-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100000; justify-content: center; align-items: center; padding: 20px; overflow-y: auto; }
@@ -96,9 +124,11 @@
         .btn-close-admin { background: #e74c3c; color: white; }
         #config-output { width: 100%; height: 150px; margin-top: 15px; font-family: monospace; font-size: 0.8rem; background: #f4f4f4; padding: 10px; border-radius: 10px; display: none; border: 1px solid #ddd; }
         .secret-trigger { cursor: pointer; user-select: none; }
+        .file-hint { font-size: 0.75rem; color: #e74c3c; margin-top: 3px; display: block; }
 
         @media (max-width: 768px) {
             h1 { font-size: 2.8rem; } h2 { font-size: 1.8rem; } .couple-img { width: 150px; height: 150px; } .frame-corner { width: 50px; height: 50px; }
+            .card-couple { font-size: 2rem; }
         }
     </style>
 </head>
@@ -108,6 +138,24 @@
 
     <audio id="bg-music" loop></audio>
     <button id="music-btn" class="music-btn" onclick="toggleMusic()"><i class="fas fa-compact-disc"></i></button>
+
+    <!-- KARTU UNDANGAN PEMBUKA -->
+    <div id="invitation-card">
+        <div class="card-content">
+            <div class="card-ornament tl"></div><div class="card-ornament tr"></div>
+            <div class="card-ornament bl"></div><div class="card-ornament br"></div>
+            
+            <div class="card-bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+            <p class="card-title">The Wedding Of</p>
+            <h2 class="card-couple" id="card-couple-names">Aspiyanor & Radina</h2>
+            <p class="card-guest-label">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+            <p class="card-guest-name" id="card-guest-name">Tamu Undangan</p>
+            <p class="card-date" id="card-date">Sabtu, 25 Oktober 2026</p>
+            <button class="btn-open-card" onclick="openFromCard()">
+                <i class="fas fa-envelope-open"></i> Buka Undangan
+            </button>
+        </div>
+    </div>
 
     <!-- COVER -->
     <section id="cover">
@@ -122,8 +170,8 @@
                 <p style="font-size: 0.9rem; margin-bottom: 5px; opacity: 0.9;">Kepada Yth. Bapak/Ibu/Saudara/i</p>
                 <div id="guest-name" class="guest-name">Tamu Undangan</div>
             </div>
-            <button class="btn-gold animate__animated animate__fadeInUp animate__delay-2s" onclick="openInvitation()">
-                <i class="fas fa-envelope-open"></i> Buka Undangan
+            <button class="btn-gold animate__animated animate__fadeInUp animate__delay-2s" onclick="scrollToContent()">
+                <i class="fas fa-arrow-down"></i> Lihat Undangan
             </button>
         </div>
     </section>
@@ -209,7 +257,7 @@
         </div>
     </section>
 
-    <!-- AMPLOP DIGITAL (PENGGANTI GALERI) -->
+    <!-- AMPLOP DIGITAL -->
     <section style="background: linear-gradient(rgba(253,251,247,0.95), rgba(253,251,247,0.95)), url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1920') center/cover;">
         <div class="frame-corner frame-tl"></div><div class="frame-corner frame-tr"></div>
         <div class="frame-corner frame-bl"></div><div class="frame-corner frame-br"></div>
@@ -249,7 +297,7 @@
                     <select id="rsvp-status" required>
                         <option value="Hadir">✅ Akan Hadir</option>
                         <option value="Tidak Hadir">❌ Maaf, Tidak Bisa Hadir</option>
-                        <option value="Masih Ragu">🤔 Masih Ragu-ragu</option>
+                        <option value="Masih Ragu"> Masih Ragu-ragu</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -324,8 +372,6 @@
                 <label>Link Google Maps</label>
                 <input type="url" id="adm-maps-link">
             </div>
-            
-            <!-- BARU: Pengaturan DANA di Admin -->
             <div class="form-group">
                 <label>Nomor DANA (Angka Saja)</label>
                 <input type="text" id="adm-dana-number" placeholder="081356045723">
@@ -334,15 +380,35 @@
                 <label>Atas Nama (Pemilik Rekening)</label>
                 <input type="text" id="adm-dana-name" placeholder="Aspiyanor">
             </div>
-
             <div class="form-group">
                 <label>Nomor WhatsApp (Format: 628...)</label>
                 <input type="text" id="adm-wa">
             </div>
+            
+            <!-- UPLOAD MUSIK -->
             <div class="form-group">
-                <label>Link Musik Latar (.mp3)</label>
-                <input type="url" id="adm-music">
+                <label>Upload Musik (.mp3, Max 1MB)</label>
+                <input type="file" id="adm-music-file" accept="audio/*" onchange="handleFileUpload(this, 'music')">
+                <span class="file-hint">*Atau gunakan link URL di bawah jika file besar</span>
+                <input type="url" id="adm-music" placeholder="Link URL musik (jika tidak upload)" style="margin-top: 8px;">
             </div>
+            
+            <!-- UPLOAD FOTO MEMPELAI PRIA -->
+            <div class="form-group">
+                <label>Upload Foto Mempelai Pria (Max 500KB)</label>
+                <input type="file" id="adm-groom-file" accept="image/*" onchange="handleFileUpload(this, 'groom')">
+                <span class="file-hint">*Atau gunakan link URL di bawah jika file besar</span>
+                <input type="url" id="adm-groom-photo" placeholder="Link URL foto pria" style="margin-top: 8px;">
+            </div>
+            
+            <!-- UPLOAD FOTO MEMPELAI WANITA -->
+            <div class="form-group">
+                <label>Upload Foto Mempelai Wanita (Max 500KB)</label>
+                <input type="file" id="adm-bride-file" accept="image/*" onchange="handleFileUpload(this, 'bride')">
+                <span class="file-hint">*Atau gunakan link URL di bawah jika file besar</span>
+                <input type="url" id="adm-bride-photo" placeholder="Link URL foto wanita" style="margin-top: 8px;">
+            </div>
+            
             <div class="form-group">
                 <label>Warna Tema Utama (Hex Code)</label>
                 <input type="color" id="adm-color" style="height: 50px; padding: 5px;">
@@ -370,7 +436,7 @@
         // ==========================================
         let CONFIG = {
             coupleNames: "Aspiyanor & Radina",
-            date: "Minggu, 25 Oktober 2026",
+            date: "Sabtu, 25 Oktober 2026",
             hijriah: "13-14 Jumadil Awal 1448 H",
             time: "Pukul 10:00 WITA - Selesai",
             venue: "Rumah Kediaman",
@@ -383,8 +449,8 @@
             musicUrl: "https://drive.google.com/uc?export=download&id=1XZIrv5ien1nLJMciz3jGUusQANMtyhUc",
             themeColor: "#8B6914",
             adminPassword: "admin123",
-            groom: { name: "Aspiyanor", full: "Aspiyanor bin H. Supiani", parent: "Bapak H. Supiani" },
-            bride: { name: "Radina", full: "Radina binti Supiani", parent: "Bapak Supiani" }
+            groom: { name: "Aspiyanor", full: "Aspiyanor bin H. Supiani", parent: "Bapak H. Supiani", photo: "" },
+            bride: { name: "Radina", full: "Radina binti Supiani", parent: "Bapak Supiani", photo: "" }
         };
 
         // ==========================================
@@ -395,7 +461,9 @@
             
             document.getElementById('display-couple-names').textContent = CONFIG.coupleNames;
             document.getElementById('footer-couple').textContent = CONFIG.coupleNames;
+            document.getElementById('card-couple-names').textContent = CONFIG.coupleNames;
             document.getElementById('display-date').textContent = CONFIG.date;
+            document.getElementById('card-date').textContent = CONFIG.date;
             document.getElementById('display-event-date').textContent = CONFIG.date;
             document.getElementById('display-hijriah').textContent = CONFIG.hijriah;
             document.getElementById('display-time').textContent = CONFIG.time;
@@ -403,20 +471,22 @@
             document.getElementById('display-address').textContent = CONFIG.address;
             document.getElementById('display-map-text').innerHTML = CONFIG.venue + "<br>" + CONFIG.address;
             
-            // Format nomor DANA agar ada spasi pengelompokan (0813-5604-5723)
             const formattedDana = CONFIG.danaNumber.replace(/(\d{4})(?=\d)/g, '$1-');
             document.getElementById('display-dana-number').textContent = formattedDana;
             document.getElementById('display-dana-name').textContent = CONFIG.danaName;
             
+            // Foto Mempelai - Prioritas: Upload > URL > Avatar Default
+            const groomPhoto = CONFIG.groom.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(CONFIG.groom.name)}&background=${CONFIG.themeColor.replace('#','')}&color=fff&size=200`;
+            document.getElementById('img-groom').src = groomPhoto;
             document.getElementById('display-groom-name').textContent = CONFIG.groom.name;
             document.getElementById('display-groom-full').textContent = CONFIG.groom.full;
             document.getElementById('display-groom-parent').textContent = CONFIG.groom.parent;
-            document.getElementById('img-groom').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(CONFIG.groom.name)}&background=${CONFIG.themeColor.replace('#','')}&color=fff&size=200`;
 
+            const bridePhoto = CONFIG.bride.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(CONFIG.bride.name)}&background=${CONFIG.themeColor.replace('#','')}&color=fff&size=200`;
+            document.getElementById('img-bride').src = bridePhoto;
             document.getElementById('display-bride-name').textContent = CONFIG.bride.name;
             document.getElementById('display-bride-full').textContent = CONFIG.bride.full;
             document.getElementById('display-bride-parent').textContent = CONFIG.bride.parent;
-            document.getElementById('img-bride').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(CONFIG.bride.name)}&background=${CONFIG.themeColor.replace('#','')}&color=fff&size=200`;
 
             if (CONFIG.mapsLink) {
                 document.getElementById('display-map-link').href = CONFIG.mapsLink;
@@ -429,7 +499,43 @@
         }
 
         // ==========================================
-        // 3. INTERAKSI UTAMA
+        // 3. FUNGSI UPLOAD FILE (BASE64)
+        // ==========================================
+        function handleFileUpload(input, type) {
+            const file = input.files[0];
+            if (!file) return;
+
+            // Validasi ukuran file
+            const maxSize = type === 'music' ? 1024 * 1024 : 512 * 1024; // 1MB untuk musik, 500KB untuk foto
+            if (file.size > maxSize) {
+                alert(`❌ File terlalu besar! Maksimal ${type === 'music' ? '1MB' : '500KB'} untuk upload.\n\nGunakan link URL (Google Drive/dll) untuk file yang lebih besar.`);
+                input.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Data = e.target.result;
+                
+                if (type === 'music') {
+                    CONFIG.musicUrl = base64Data;
+                    document.getElementById('adm-music').value = ''; // Kosongkan URL jika upload
+                    alert('✅ Musik berhasil diupload! Klik "Terapkan Sementara" untuk mendengar.');
+                } else if (type === 'groom') {
+                    CONFIG.groom.photo = base64Data;
+                    document.getElementById('adm-groom-photo').value = '';
+                    alert('✅ Foto mempelai pria berhasil diupload!');
+                } else if (type === 'bride') {
+                    CONFIG.bride.photo = base64Data;
+                    document.getElementById('adm-bride-photo').value = '';
+                    alert('✅ Foto mempelai wanita berhasil diupload!');
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ==========================================
+        // 4. INTERAKSI UTAMA
         // ==========================================
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -445,18 +551,28 @@
         function getGuestName() {
             const urlParams = new URLSearchParams(window.location.search);
             const guest = urlParams.get('to');
-            if (guest) {
-                const formatted = guest.replace(/\b\w/g, l => l.toUpperCase());
-                document.getElementById('guest-name').textContent = formatted;
-                document.getElementById('rsvp-name').value = formatted;
-            }
+            const guestName = guest ? guest.replace(/\b\w/g, l => l.toUpperCase()) : 'Tamu Undangan';
+            
+            document.getElementById('guest-name').textContent = guestName;
+            document.getElementById('card-guest-name').textContent = guestName;
+            document.getElementById('rsvp-name').value = guestName;
         }
 
-        function openInvitation() {
-            document.getElementById('cover').style.transform = 'translateY(-100%)';
-            document.getElementById('cover').style.opacity = '0';
-            document.getElementById('cover').style.pointerEvents = 'none';
+        function openFromCard() {
+            const card = document.getElementById('invitation-card');
+            card.classList.add('hidden');
             
+            setTimeout(() => {
+                card.style.display = 'none';
+                playMusic();
+            }, 800);
+        }
+
+        function scrollToContent() {
+            document.getElementById('cover').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function playMusic() {
             const music = document.getElementById('bg-music');
             if (CONFIG.musicUrl) {
                 music.play().then(() => {
@@ -497,18 +613,17 @@
             window.open(`https://wa.me/${CONFIG.waNumber}?text=${encodeURIComponent(text)}`, '_blank');
         }
 
-        // FUNGSI BARU: Salin Nomor DANA
         function copyDana() {
-            const danaNumber = CONFIG.danaNumber; // Mengambil angka murni tanpa spasi
+            const danaNumber = CONFIG.danaNumber;
             navigator.clipboard.writeText(danaNumber).then(() => {
                 const btn = document.querySelector('button[onclick="copyDana()"]');
                 const originalHTML = btn.innerHTML;
                 btn.innerHTML = '<i class="fas fa-check"></i> Berhasil Disalin!';
-                btn.style.background = '#27ae60'; // Warna hijau sukses
+                btn.style.background = '#27ae60';
                 
                 setTimeout(() => {
                     btn.innerHTML = originalHTML;
-                    btn.style.background = ''; // Kembali ke warna asli (gradient)
+                    btn.style.background = '';
                 }, 2000);
             }).catch(err => {
                 alert('Gagal menyalin otomatis. Silakan salin manual: ' + danaNumber);
@@ -531,7 +646,7 @@
         }
 
         // ==========================================
-        // 4. ADMIN PANEL LOGIC
+        // 5. ADMIN PANEL LOGIC
         // ==========================================
         let clickCount = 0;
         function handleSecretClick() {
@@ -581,7 +696,18 @@
             document.getElementById('adm-dana-number').value = CONFIG.danaNumber;
             document.getElementById('adm-dana-name').value = CONFIG.danaName;
             document.getElementById('adm-wa').value = CONFIG.waNumber;
-            document.getElementById('adm-music').value = CONFIG.musicUrl;
+            
+            // Cek apakah music/photo adalah base64 atau URL
+            if (CONFIG.musicUrl && !CONFIG.musicUrl.startsWith('data:')) {
+                document.getElementById('adm-music').value = CONFIG.musicUrl;
+            }
+            if (CONFIG.groom.photo && !CONFIG.groom.photo.startsWith('data:')) {
+                document.getElementById('adm-groom-photo').value = CONFIG.groom.photo;
+            }
+            if (CONFIG.bride.photo && !CONFIG.bride.photo.startsWith('data:')) {
+                document.getElementById('adm-bride-photo').value = CONFIG.bride.photo;
+            }
+            
             document.getElementById('adm-color').value = CONFIG.themeColor;
             
             document.getElementById('admin-modal').style.display = 'flex';
@@ -602,11 +728,27 @@
             CONFIG.venue = document.getElementById('adm-venue').value;
             CONFIG.address = document.getElementById('adm-address').value;
             CONFIG.mapsLink = document.getElementById('adm-maps-link').value;
-            CONFIG.danaNumber = document.getElementById('adm-dana-number').value.replace(/\D/g, ''); // Hanya simpan angka
+            CONFIG.danaNumber = document.getElementById('adm-dana-number').value.replace(/\D/g, '');
             CONFIG.danaName = document.getElementById('adm-dana-name').value;
             CONFIG.waNumber = document.getElementById('adm-wa').value;
-            CONFIG.musicUrl = document.getElementById('adm-music').value;
             CONFIG.themeColor = document.getElementById('adm-color').value;
+
+            // Handle music: prioritaskan URL jika ada, jika tidak pakai base64
+            const musicUrl = document.getElementById('adm-music').value;
+            if (musicUrl) {
+                CONFIG.musicUrl = musicUrl;
+            }
+
+            // Handle foto: prioritaskan URL jika ada, jika tidak pakai base64
+            const groomPhotoUrl = document.getElementById('adm-groom-photo').value;
+            if (groomPhotoUrl) {
+                CONFIG.groom.photo = groomPhotoUrl;
+            }
+
+            const bridePhotoUrl = document.getElementById('adm-bride-photo').value;
+            if (bridePhotoUrl) {
+                CONFIG.bride.photo = bridePhotoUrl;
+            }
 
             render();
             
