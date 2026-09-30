@@ -19,8 +19,123 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
-    <!-- Hubungkan ke file CSS eksternal -->
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary: #8B6914; --primary-light: #C9A961; --primary-dark: #5C460D;
+            --bg-color: #FDFBF7; --text-color: #4a4a4a; --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.85); --border-gold: rgba(139, 105, 20, 0.3);
+            --shadow-md: 0 10px 30px rgba(139, 105, 20, 0.15);
+            --font-base: "Poppins", sans-serif; --font-accent: "Great Vibes", cursive;
+            --font-heading: "Playfair Display", serif; --font-arabic: "Amiri", serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; scroll-snap-type: y mandatory; overflow-y: scroll; }
+        body { font-family: var(--font-base); color: var(--text-color); background-color: var(--bg-color); line-height: 1.6; overflow-x: hidden; }
+
+        /* Loader */
+        #loader { position: fixed; inset: 0; background: var(--bg-color); z-index: 99999; display: flex; justify-content: center; align-items: center; flex-direction: column; transition: opacity 0.5s ease, visibility 0.5s ease; }
+        .spinner { width: 50px; height: 50px; border: 3px solid var(--primary-light); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Sections */
+        section { scroll-snap-align: start; min-height: 100vh; width: 100%; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 60px 20px; background-size: cover; background-position: center; background-repeat: no-repeat; overflow: hidden; }
+        .frame-corner { position: absolute; width: 80px; height: 80px; z-index: 1; pointer-events: none; border: 2px solid var(--primary-light); opacity: 0.6; }
+        .frame-tl { top: 20px; left: 20px; border-right: none; border-bottom: none; border-radius: 10px 0 0 0; }
+        .frame-tr { top: 20px; right: 20px; border-left: none; border-bottom: none; border-radius: 0 10px 0 0; }
+        .frame-bl { bottom: 20px; left: 20px; border-right: none; border-top: none; border-radius: 0 0 0 10px; }
+        .frame-br { bottom: 20px; right: 20px; border-left: none; border-top: none; border-radius: 0 0 10px 0; }
+
+        .content-wrapper { max-width: 600px; width: 100%; text-align: center; z-index: 2; position: relative; }
+        .font-accent { font-family: var(--font-accent); }
+        .font-arabic { font-family: var(--font-arabic); direction: rtl; line-height: 2; }
+        h1 { font-family: var(--font-accent); font-size: 3.5rem; color: var(--primary); line-height: 1.2; margin: 10px 0; }
+        h2 { font-family: var(--font-heading); font-size: 2.2rem; color: var(--primary-dark); margin-bottom: 20px; letter-spacing: 1px; }
+        h3 { font-family: var(--font-accent); font-size: 2.5rem; color: var(--primary); margin-bottom: 10px; }
+
+        /* Cover dengan overlay lebih transparan agar background terlihat jelas */
+        #cover { 
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1920') center/cover; 
+            color: white; 
+        }
+        #cover h1 { color: var(--white); text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        #cover h2 { color: var(--primary-light); }
+        
+        .guest-box { background: rgba(255,255,255,0.2); backdrop-filter: blur(12px); padding: 25px 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.4); margin: 30px auto; max-width: 350px; }
+        .guest-name { font-family: var(--font-accent); font-size: 2.2rem; color: var(--primary-light); margin-top: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .btn-gold { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; border: none; padding: 14px 35px; border-radius: 50px; font-size: 1rem; font-weight: 500; cursor: pointer; box-shadow: 0 4px 15px rgba(139,105,20,0.4); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(139,105,20,0.6); filter: brightness(1.1); }
+
+        .luxury-card { background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border-gold); border-radius: 20px; box-shadow: var(--shadow-md); padding: 30px 25px; text-align: center; }
+        .couple-img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary-light); margin: 0 auto 20px; box-shadow: 0 10px 25px rgba(139,105,20,0.2); animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        .event-item { margin: 20px 0; padding: 20px; background: rgba(255,255,255,0.7); border-radius: 12px; border-left: 4px solid var(--primary); text-align: left; }
+        .map-container { width: 100%; height: 300px; border-radius: 15px; overflow: hidden; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 2px solid var(--border-gold); }
+        .map-container iframe { width: 100%; height: 100%; border: 0; }
+
+        .form-group { margin-bottom: 18px; text-align: left; }
+        .form-group label { display: block; font-size: 0.9rem; margin-bottom: 6px; font-weight: 500; color: var(--primary-dark); }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px; border: 1px solid #e0d0b8; border-radius: 10px; font-family: var(--font-base); font-size: 0.95rem; background: rgba(255,255,255,0.8); transition: all 0.3s; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(139,105,20,0.15); }
+        .form-group input[type="file"] { padding: 10px; background: #f9f9f9; font-size: 0.85rem; }
+
+        .music-btn { position: fixed; bottom: 25px; right: 25px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: 2px solid var(--primary-light); cursor: pointer; font-size: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 100; display: none; align-items: center; justify-content: center; }
+        .music-btn.playing { animation: spin 4s linear infinite; }
+
+        .countdown { display: flex; justify-content: center; gap: 12px; margin: 25px 0; flex-wrap: wrap; }
+        .countdown-item { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; padding: 15px 10px; border-radius: 12px; min-width: 70px; box-shadow: 0 4px 10px rgba(139,105,20,0.3); }
+        .countdown-item .number { font-size: 1.6rem; font-weight: 700; display: block; font-family: var(--font-heading); }
+        .countdown-item .text { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; }
+
+        /* KARTU UNDANGAN PEMBUKA */
+        #invitation-card {
+            position: fixed; inset: 0; background: linear-gradient(135deg, rgba(139,105,20,0.95), rgba(92,70,13,0.95));
+            z-index: 99998; display: flex; justify-content: center; align-items: center; padding: 20px;
+            opacity: 1; transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        #invitation-card.hidden { opacity: 0; transform: scale(0.9); pointer-events: none; }
+        .card-content {
+            background: white; padding: 40px 30px; border-radius: 20px; max-width: 400px; width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center; position: relative;
+            animation: cardSlideIn 0.8s ease;
+        }
+        @keyframes cardSlideIn { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .card-ornament { position: absolute; width: 60px; height: 60px; border: 2px solid var(--primary-light); opacity: 0.5; }
+        .card-ornament.tl { top: 10px; left: 10px; border-right: none; border-bottom: none; border-radius: 10px 0 0 0; }
+        .card-ornament.tr { top: 10px; right: 10px; border-left: none; border-bottom: none; border-radius: 0 10px 0 0; }
+        .card-ornament.bl { bottom: 10px; left: 10px; border-right: none; border-top: none; border-radius: 0 0 0 10px; }
+        .card-ornament.br { bottom: 10px; right: 10px; border-left: none; border-top: none; border-radius: 0 0 10px 0; }
+        .card-bismillah { font-family: var(--font-arabic); font-size: 1.8rem; color: var(--primary); margin-bottom: 15px; }
+        .card-title { font-family: var(--font-heading); font-size: 1.2rem; color: var(--text-color); margin-bottom: 10px; }
+        .card-couple { font-family: var(--font-accent); font-size: 2.5rem; color: var(--primary); margin: 15px 0; }
+        .card-guest-label { font-size: 0.9rem; color: #666; margin-bottom: 5px; }
+        .card-guest-name { font-family: var(--font-accent); font-size: 1.8rem; color: var(--primary); margin-bottom: 20px; }
+        .card-date { font-size: 0.95rem; color: var(--text-color); margin-bottom: 25px; }
+        .btn-open-card { background: var(--primary); color: white; border: none; padding: 12px 30px; border-radius: 50px; font-size: 1rem; cursor: pointer; transition: 0.3s; }
+        .btn-open-card:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+        /* ADMIN PANEL STYLES */
+        #admin-modal, #admin-login-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100000; justify-content: center; align-items: center; padding: 20px; overflow-y: auto; }
+        .admin-box { background: white; padding: 30px; border-radius: 20px; width: 100%; max-width: 500px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; }
+        .admin-box h2 { text-align: center; color: var(--primary); margin-bottom: 20px; font-size: 1.8rem; }
+        .admin-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+        .btn-admin { flex: 1; padding: 12px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 0.9rem; }
+        .btn-apply { background: var(--primary); color: white; }
+        .btn-apply:hover { background: var(--primary-dark); }
+        .btn-generate { background: #3498db; color: white; width: 100%; margin-top: 10px; }
+        .btn-generate:hover { background: #2980b9; }
+        .btn-close-admin { background: #e74c3c; color: white; }
+        #config-output { width: 100%; height: 150px; margin-top: 15px; font-family: monospace; font-size: 0.8rem; background: #f4f4f4; padding: 10px; border-radius: 10px; display: none; border: 1px solid #ddd; }
+        .secret-trigger { cursor: pointer; user-select: none; }
+        .file-hint { font-size: 0.75rem; color: #e74c3c; margin-top: 3px; display: block; }
+        .admin-section-title { font-size: 1.1rem; color: var(--primary); font-weight: 600; margin: 25px 0 15px 0; padding-bottom: 8px; border-bottom: 2px solid var(--primary-light); }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; } h2 { font-size: 1.8rem; } .couple-img { width: 150px; height: 150px; } .frame-corner { width: 50px; height: 50px; }
+            .card-couple { font-size: 2rem; }
+        }
+    </style>
 </head>
 <body>
 
@@ -214,7 +329,540 @@
         </div>
     </section>
 
-    <!-- Hubungkan ke file Script eksternal -->
-    <script src="script.js"></script>
+    <!-- ADMIN LOGIN MODAL -->
+    <div id="admin-login-modal">
+        <div class="admin-box" style="max-width: 400px; text-align: center;">
+            <h2><i class="fas fa-lock"></i> Admin Access</h2>
+            <p style="margin-bottom: 20px; color: #666;">Masukkan password untuk mengelola undangan</p>
+            <div class="form-group" style="text-align: left;">
+                <input type="password" id="admin-password-input" placeholder="Password Admin" onkeypress="if(event.key==='Enter') verifyAdminPassword()">
+            </div>
+            <p id="login-error" style="color: #e74c3c; font-size: 0.9rem; margin-bottom: 15px; min-height: 20px;"></p>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-admin btn-apply" style="flex:1;" onclick="verifyAdminPassword()">Masuk</button>
+                <button class="btn-admin btn-close-admin" style="flex:1;" onclick="closeAdminLogin()">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL MODAL -->
+    <div id="admin-modal">
+        <div class="admin-box">
+            <h2><i class="fas fa-cog"></i> Control Panel</h2>
+            
+            <div class="form-group">
+                <label>Nama Mempelai (Contoh: Aspiyanor & Radina)</label>
+                <input type="text" id="adm-couple-names">
+            </div>
+            <div class="form-group">
+                <label>Tanggal Acara</label>
+                <input type="text" id="adm-date">
+            </div>
+            <div class="form-group">
+                <label>Tanggal Hijriah</label>
+                <input type="text" id="adm-hijriah">
+            </div>
+            <div class="form-group">
+                <label>Waktu Acara</label>
+                <input type="text" id="adm-time">
+            </div>
+            <div class="form-group">
+                <label>Nama Tempat</label>
+                <input type="text" id="adm-venue">
+            </div>
+            <div class="form-group">
+                <label>Alamat Lengkap</label>
+                <textarea id="adm-address" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Link Google Maps</label>
+                <input type="url" id="adm-maps-link">
+            </div>
+            <div class="form-group">
+                <label>Nomor DANA (Angka Saja)</label>
+                <input type="text" id="adm-dana-number" placeholder="081356045723">
+            </div>
+            <div class="form-group">
+                <label>Atas Nama (Pemilik Rekening)</label>
+                <input type="text" id="adm-dana-name" placeholder="Aspiyanor">
+            </div>
+            <div class="form-group">
+                <label>Nomor WhatsApp (Format: 628...)</label>
+                <input type="text" id="adm-wa">
+            </div>
+            
+            <!-- UPLOAD MUSIK -->
+            <div class="form-group">
+                <label>Upload Musik (.mp3, Max 1MB)</label>
+                <input type="file" id="adm-music-file" accept="audio/*" onchange="handleFileUpload(this, 'music')">
+                <span class="file-hint">*Atau gunakan link URL di bawah jika file besar</span>
+                <input type="url" id="adm-music" placeholder="Link URL musik (jika tidak upload)" style="margin-top: 8px;">
+            </div>
+            
+            <!-- UPLOAD FOTO MEMPELAI PRIA -->
+            <div class="form-group">
+                <label>Upload Foto Mempelai Pria (Max 500KB)</label>
+                <input type="file" id="adm-groom-file" accept="image/*" onchange="handleFileUpload(this, 'groom')">
+                <span class="file-hint">*Atau gunakan link URL di bawah jika file besar</span>
+                <input type="url" id="adm-groom-photo" placeholder="Link URL foto pria" style="margin-top: 8px;">
+            </div>
+            
+            <!-- UPLOAD FOTO MEMPELAI WANITA -->
+            <div class="form-group">
+                <label>Upload Foto Mempelai Wanita (Max 500KB)</label>
+                <input type="file" id="adm-bride-file" accept="image/*" onchange="handleFileUpload(this, 'bride')">
+                <span class="file-hint">*Atau gunakan link URL di bawah jika file besar</span>
+                <input type="url" id="adm-bride-photo" placeholder="Link URL foto wanita" style="margin-top: 8px;">
+            </div>
+            
+            <!-- UPLOAD 3 BACKGROUND UTAMA -->
+            <h3 class="admin-section-title"><i class="fas fa-image"></i> Latar Belakang (3 Foto Utama)</h3>
+            <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">Upload 3 foto berbeda untuk latar belakang section utama. Overlay dibuat transparan agar foto terlihat jelas.</p>
+            
+            <div class="form-group">
+                <label>📸 Background 1: Cover (Halaman Depan)</label>
+                <input type="file" id="adm-bg-cover" accept="image/*" onchange="handleBgUpload(this, 'cover')">
+                <span class="file-hint">*Maksimal 500KB. Overlay: 40% gelap agar teks tetap terbaca</span>
+                <input type="url" id="adm-bg-cover-url" placeholder="Atau link URL background cover" style="margin-top: 8px;">
+            </div>
+            
+            <div class="form-group">
+                <label>📸 Background 2: Mempelai (Pria & Wanita)</label>
+                <input type="file" id="adm-bg-couple" accept="image/*" onchange="handleBgUpload(this, 'couple')">
+                <span class="file-hint">*Maksimal 500KB. Overlay: 30% terang agar foto mempelai menonjol</span>
+                <input type="url" id="adm-bg-couple-url" placeholder="Atau link URL background mempelai" style="margin-top: 8px;">
+            </div>
+            
+            <div class="form-group">
+                <label>📸 Background 3: Acara & Lainnya (Doa, Peta, Amplop, Footer)</label>
+                <input type="file" id="adm-bg-event" accept="image/*" onchange="handleBgUpload(this, 'event')">
+                <span class="file-hint">*Maksimal 500KB. Overlay: 50% untuk keseimbangan</span>
+                <input type="url" id="adm-bg-event-url" placeholder="Atau link URL background acara" style="margin-top: 8px;">
+            </div>
+            
+            <div class="form-group">
+                <label>Warna Tema Utama (Hex Code)</label>
+                <input type="color" id="adm-color" style="height: 50px; padding: 5px;">
+            </div>
+
+            <div class="admin-actions">
+                <button class="btn-admin btn-apply" onclick="applyAdminSettings()"><i class="fas fa-eye"></i> Terapkan Sementara</button>
+                <button class="btn-admin btn-close-admin" onclick="closeAdminPanel()"><i class="fas fa-times"></i> Tutup</button>
+            </div>
+            
+            <button class="btn-admin btn-generate" onclick="generateConfig()"><i class="fas fa-code"></i> Generate Kode Permanen</button>
+            <textarea id="config-output" readonly placeholder="Kode konfigurasi akan muncul di sini..."></textarea>
+            <button class="btn-admin btn-apply" id="btn-copy-config" style="width: 100%; margin-top: 10px; display: none; background: #27ae60;" onclick="copyConfig()">
+                <i class="fas fa-copy"></i> Salin Kode di Atas
+            </button>
+            <p style="font-size: 0.75rem; color: #666; margin-top: 10px; text-align: center;">
+                *Setelah menyalin kode, buka file index.html di GitHub, cari bagian "let CONFIG =", ganti dengan kode baru, lalu Commit.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. KONFIGURASI PUSAT
+        // ==========================================
+        let CONFIG = {
+            coupleNames: "Aspiyanor & Radina",
+            date: "Sabtu, 25 Oktober 2026",
+            hijriah: "13-14 Jumadil Awal 1448 H",
+            time: "Pukul 10:00 WITA - Selesai",
+            venue: "Rumah Kediaman",
+            address: "RT 5, Desa Darussalam, Kec. Danau Panggang, Kab. Hulu Sungai Utara (HSU), Kalimantan Selatan",
+            mapsLink: "https://maps.google.com/maps?q=Desa+Darussalam+Danau+Panggang+HSU",
+            mapsEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.123!2d115.2167!3d-2.3167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwMTknMDAuMCJTIDExNcKwMTMnMDAuMCJF!5e0!3m2!1sid!2sid!4v1600000000000!5m2!1sid!2sid",
+            danaNumber: "081356045723",
+            danaName: "Aspiyanor",
+            waNumber: "6281356045723",
+            musicUrl: "https://drive.google.com/uc?export=download&id=1XZIrv5ien1nLJMciz3jGUusQANMtyhUc",
+            themeColor: "#8B6914",
+            adminPassword: "admin123",
+            groom: { name: "Aspiyanor", full: "Aspiyanor bin H. Supiani", parent: "Bapak H. Supiani", photo: "" },
+            bride: { name: "Radina", full: "Radina binti Supiani", parent: "Bapak Supiani", photo: "" },
+            backgrounds: {
+                cover: "",
+                couple: "",
+                event: ""
+            }
+        };
+
+        // ==========================================
+        // 2. FUNGSI RENDER
+        // ==========================================
+        function render() {
+            document.documentElement.style.setProperty('--primary', CONFIG.themeColor);
+            
+            document.getElementById('display-couple-names').textContent = CONFIG.coupleNames;
+            document.getElementById('footer-couple').textContent = CONFIG.coupleNames;
+            document.getElementById('card-couple-names').textContent = CONFIG.coupleNames;
+            document.getElementById('display-date').textContent = CONFIG.date;
+            document.getElementById('card-date').textContent = CONFIG.date;
+            document.getElementById('display-event-date').textContent = CONFIG.date;
+            document.getElementById('display-hijriah').textContent = CONFIG.hijriah;
+            document.getElementById('display-time').textContent = CONFIG.time;
+            document.getElementById('display-venue').textContent = CONFIG.venue;
+            document.getElementById('display-address').textContent = CONFIG.address;
+            document.getElementById('display-map-text').innerHTML = CONFIG.venue + "<br>" + CONFIG.address;
+            
+            const formattedDana = CONFIG.danaNumber.replace(/(\d{4})(?=\d)/g, '$1-');
+            document.getElementById('display-dana-number').textContent = formattedDana;
+            document.getElementById('display-dana-name').textContent = CONFIG.danaName;
+            
+            const groomPhoto = CONFIG.groom.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(CONFIG.groom.name)}&background=${CONFIG.themeColor.replace('#','')}&color=fff&size=200`;
+            document.getElementById('img-groom').src = groomPhoto;
+            document.getElementById('display-groom-name').textContent = CONFIG.groom.name;
+            document.getElementById('display-groom-full').textContent = CONFIG.groom.full;
+            document.getElementById('display-groom-parent').textContent = CONFIG.groom.parent;
+
+            const bridePhoto = CONFIG.bride.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(CONFIG.bride.name)}&background=${CONFIG.themeColor.replace('#','')}&color=fff&size=200`;
+            document.getElementById('img-bride').src = bridePhoto;
+            document.getElementById('display-bride-name').textContent = CONFIG.bride.name;
+            document.getElementById('display-bride-full').textContent = CONFIG.bride.full;
+            document.getElementById('display-bride-parent').textContent = CONFIG.bride.parent;
+
+            if (CONFIG.mapsLink) {
+                document.getElementById('display-map-link').href = CONFIG.mapsLink;
+                document.getElementById('display-map-frame').src = CONFIG.mapsEmbed || `https://www.google.com/maps?q=${encodeURIComponent(CONFIG.address)}&output=embed`;
+            }
+
+            if (CONFIG.musicUrl) {
+                document.getElementById('bg-music').src = CONFIG.musicUrl;
+            }
+
+            // Apply 3 backgrounds
+            applyBackgrounds();
+        }
+
+        // ==========================================
+        // 3. FUNGSI APPLY 3 BACKGROUNDS (Overlay lebih transparan)
+        // ==========================================
+        function applyBackgrounds() {
+            const bg = CONFIG.backgrounds;
+            
+            // Background 1: Cover (overlay 40% gelap)
+            const coverBg = bg.cover || 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1920';
+            document.getElementById('cover').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${coverBg}')`;
+            
+            // Background 2: Mempelai Pria & Wanita (overlay 30% terang agar foto terlihat jelas)
+            const coupleBg = bg.couple || 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1920';
+            document.getElementById('section-groom').style.backgroundImage = `linear-gradient(rgba(253,251,247,0.3), rgba(253,251,247,0.3)), url('${coupleBg}')`;
+            document.getElementById('section-bride').style.backgroundImage = `linear-gradient(rgba(253,251,247,0.3), rgba(253,251,247,0.3)), url('${coupleBg}')`;
+            
+            // Background 3: Acara & Lainnya (Doa, Peta, Amplop, Footer) - overlay 50%
+            const eventBg = bg.event || 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1920';
+            document.getElementById('section-prayer').style.backgroundImage = `linear-gradient(rgba(253,251,247,0.5), rgba(253,251,247,0.5)), url('${eventBg}')`;
+            document.getElementById('section-event').style.backgroundImage = `linear-gradient(rgba(253,251,247,0.5), rgba(253,251,247,0.5)), url('${eventBg}')`;
+            document.getElementById('section-map').style.backgroundImage = `linear-gradient(rgba(253,251,247,0.5), rgba(253,251,247,0.5)), url('${eventBg}')`;
+            document.getElementById('section-dana').style.backgroundImage = `linear-gradient(rgba(253,251,247,0.5), rgba(253,251,247,0.5)), url('${eventBg}')`;
+            document.getElementById('section-rsvp').style.backgroundImage = `linear-gradient(rgba(253,251,247,0.5), rgba(253,251,247,0.5)), url('${eventBg}')`;
+            document.getElementById('section-footer').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${eventBg}')`;
+        }
+
+        // ==========================================
+        // 4. FUNGSI UPLOAD FILE (BASE64)
+        // ==========================================
+        function handleFileUpload(input, type) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const maxSize = type === 'music' ? 1024 * 1024 : 512 * 1024;
+            if (file.size > maxSize) {
+                alert(`❌ File terlalu besar! Maksimal ${type === 'music' ? '1MB' : '500KB'} untuk upload.\n\nGunakan link URL (Google Drive/dll) untuk file yang lebih besar.`);
+                input.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Data = e.target.result;
+                
+                if (type === 'music') {
+                    CONFIG.musicUrl = base64Data;
+                    document.getElementById('adm-music').value = '';
+                    alert('✅ Musik berhasil diupload! Klik "Terapkan Sementara" untuk mendengar.');
+                } else if (type === 'groom') {
+                    CONFIG.groom.photo = base64Data;
+                    document.getElementById('adm-groom-photo').value = '';
+                    alert('✅ Foto mempelai pria berhasil diupload!');
+                } else if (type === 'bride') {
+                    CONFIG.bride.photo = base64Data;
+                    document.getElementById('adm-bride-photo').value = '';
+                    alert('✅ Foto mempelai wanita berhasil diupload!');
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleBgUpload(input, section) {
+            const file = input.files[0];
+            if (!file) return;
+
+            if (file.size > 512 * 1024) {
+                alert('❌ File terlalu besar! Maksimal 500KB untuk background.\n\nGunakan link URL untuk gambar yang lebih besar.');
+                input.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                CONFIG.backgrounds[section] = e.target.result;
+                document.getElementById(`adm-bg-${section}-url`).value = '';
+                alert(`✅ Background ${section} berhasil diupload!`);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ==========================================
+        // 5. INTERAKSI UTAMA
+        // ==========================================
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                document.getElementById('loader').style.visibility = 'hidden';
+            }, 800);
+            getGuestName();
+            render();
+            setupScrollAnimations();
+            checkUrlForAdmin();
+        });
+
+        function getGuestName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const guest = urlParams.get('to');
+            const guestName = guest ? guest.replace(/\b\w/g, l => l.toUpperCase()) : 'Tamu Undangan';
+            
+            document.getElementById('guest-name').textContent = guestName;
+            document.getElementById('card-guest-name').textContent = guestName;
+            document.getElementById('rsvp-name').value = guestName;
+        }
+
+        function openFromCard() {
+            const card = document.getElementById('invitation-card');
+            card.classList.add('hidden');
+            
+            setTimeout(() => {
+                card.style.display = 'none';
+                playMusic();
+            }, 800);
+        }
+
+        function scrollToContent() {
+            document.getElementById('cover').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function playMusic() {
+            const music = document.getElementById('bg-music');
+            if (CONFIG.musicUrl) {
+                music.play().then(() => {
+                    document.getElementById('music-btn').style.display = 'flex';
+                    document.getElementById('music-btn').classList.add('playing');
+                }).catch(() => {
+                    document.getElementById('music-btn').style.display = 'flex';
+                });
+            }
+        }
+
+        function toggleMusic() {
+            const music = document.getElementById('bg-music');
+            const btn = document.getElementById('music-btn');
+            if (music.paused) { music.play(); btn.classList.add('playing'); } 
+            else { music.pause(); btn.classList.remove('playing'); }
+        }
+
+        function updateCountdown() {
+            const target = new Date('2026-10-25T10:00:00+08:00').getTime(); 
+            const diff = target - Date.now();
+            if (diff > 0) {
+                document.getElementById('days').textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
+                document.getElementById('hours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        function sendToWhatsApp(e) {
+            e.preventDefault();
+            const name = document.getElementById('rsvp-name').value;
+            const status = document.getElementById('rsvp-status').value;
+            const message = document.getElementById('rsvp-message').value;
+            const text = `Assalamualaikum Wr. Wb.\n\nKepada Yth. ${CONFIG.coupleNames},\n\n${message}\n\nNama: ${name}\nStatus Kehadiran: ${status}\n\nTerima kasih.`;
+            window.open(`https://wa.me/${CONFIG.waNumber}?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function copyDana() {
+            const danaNumber = CONFIG.danaNumber;
+            navigator.clipboard.writeText(danaNumber).then(() => {
+                const btn = document.querySelector('button[onclick="copyDana()"]');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> Berhasil Disalin!';
+                btn.style.background = '#27ae60';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                alert('Gagal menyalin otomatis. Silakan salin manual: ' + danaNumber);
+            });
+        }
+
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate__fadeInUp');
+                        entry.target.style.opacity = 1;
+                    }
+                });
+            }, { threshold: 0.15 });
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                el.style.opacity = 0;
+                observer.observe(el);
+            });
+        }
+
+        // ==========================================
+        // 6. ADMIN PANEL LOGIC
+        // ==========================================
+        let clickCount = 0;
+        function handleSecretClick() {
+            clickCount++;
+            if (clickCount >= 5) {
+                openAdminLogin();
+                clickCount = 0;
+            }
+        }
+
+        function checkUrlForAdmin() {
+            if (window.location.hash === '#admin') {
+                openAdminLogin();
+            }
+        }
+
+        function openAdminLogin() {
+            document.getElementById('admin-login-modal').style.display = 'flex';
+            document.getElementById('admin-password-input').value = '';
+            document.getElementById('login-error').textContent = '';
+            setTimeout(() => document.getElementById('admin-password-input').focus(), 100);
+        }
+
+        function closeAdminLogin() {
+            document.getElementById('admin-login-modal').style.display = 'none';
+            window.location.hash = '';
+        }
+
+        function verifyAdminPassword() {
+            const input = document.getElementById('admin-password-input').value;
+            if (input === CONFIG.adminPassword) {
+                closeAdminLogin();
+                openAdminPanel();
+            } else {
+                document.getElementById('login-error').textContent = '❌ Password salah!';
+            }
+        }
+
+        function openAdminPanel() {
+            document.getElementById('adm-couple-names').value = CONFIG.coupleNames;
+            document.getElementById('adm-date').value = CONFIG.date;
+            document.getElementById('adm-hijriah').value = CONFIG.hijriah;
+            document.getElementById('adm-time').value = CONFIG.time;
+            document.getElementById('adm-venue').value = CONFIG.venue;
+            document.getElementById('adm-address').value = CONFIG.address;
+            document.getElementById('adm-maps-link').value = CONFIG.mapsLink;
+            document.getElementById('adm-dana-number').value = CONFIG.danaNumber;
+            document.getElementById('adm-dana-name').value = CONFIG.danaName;
+            document.getElementById('adm-wa').value = CONFIG.waNumber;
+            
+            if (CONFIG.musicUrl && !CONFIG.musicUrl.startsWith('data:')) {
+                document.getElementById('adm-music').value = CONFIG.musicUrl;
+            }
+            if (CONFIG.groom.photo && !CONFIG.groom.photo.startsWith('data:')) {
+                document.getElementById('adm-groom-photo').value = CONFIG.groom.photo;
+            }
+            if (CONFIG.bride.photo && !CONFIG.bride.photo.startsWith('data:')) {
+                document.getElementById('adm-bride-photo').value = CONFIG.bride.photo;
+            }
+            
+            // Load 3 background URLs
+            const bgSections = ['cover', 'couple', 'event'];
+            bgSections.forEach(section => {
+                const bgValue = CONFIG.backgrounds[section];
+                if (bgValue && !bgValue.startsWith('data:')) {
+                    document.getElementById(`adm-bg-${section}-url`).value = bgValue;
+                }
+            });
+            
+            document.getElementById('adm-color').value = CONFIG.themeColor;
+            
+            document.getElementById('admin-modal').style.display = 'flex';
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('admin-modal').style.display = 'none';
+            document.getElementById('config-output').style.display = 'none';
+            document.getElementById('btn-copy-config').style.display = 'none';
+            window.location.hash = '';
+        }
+
+        function applyAdminSettings() {
+            CONFIG.coupleNames = document.getElementById('adm-couple-names').value;
+            CONFIG.date = document.getElementById('adm-date').value;
+            CONFIG.hijriah = document.getElementById('adm-hijriah').value;
+            CONFIG.time = document.getElementById('adm-time').value;
+            CONFIG.venue = document.getElementById('adm-venue').value;
+            CONFIG.address = document.getElementById('adm-address').value;
+            CONFIG.mapsLink = document.getElementById('adm-maps-link').value;
+            CONFIG.danaNumber = document.getElementById('adm-dana-number').value.replace(/\D/g, '');
+            CONFIG.danaName = document.getElementById('adm-dana-name').value;
+            CONFIG.waNumber = document.getElementById('adm-wa').value;
+            CONFIG.themeColor = document.getElementById('adm-color').value;
+
+            const musicUrl = document.getElementById('adm-music').value;
+            if (musicUrl) CONFIG.musicUrl = musicUrl;
+
+            const groomPhotoUrl = document.getElementById('adm-groom-photo').value;
+            if (groomPhotoUrl) CONFIG.groom.photo = groomPhotoUrl;
+
+            const bridePhotoUrl = document.getElementById('adm-bride-photo').value;
+            if (bridePhotoUrl) CONFIG.bride.photo = bridePhotoUrl;
+
+            // Load 3 background URLs
+            const bgSections = ['cover', 'couple', 'event'];
+            bgSections.forEach(section => {
+                const bgUrl = document.getElementById(`adm-bg-${section}-url`).value;
+                if (bgUrl) CONFIG.backgrounds[section] = bgUrl;
+            });
+
+            render();
+            
+            const music = document.getElementById('bg-music');
+            if (CONFIG.musicUrl) {
+                music.src = CONFIG.musicUrl;
+                if (!music.paused) { music.play(); }
+                document.getElementById('music-btn').style.display = 'flex';
+            }
+
+            alert('✅ Perubahan diterapkan sementara di browser Anda!\n\nUntuk menyimpan permanen agar terlihat oleh semua tamu, klik tombol "Generate Kode Permanen" di bawah.');
+        }
+
+        function generateConfig() {
+            const configString = `let CONFIG = ${JSON.stringify(CONFIG, null, 4)};`;
+            document.getElementById('config-output').value = configString;
+            document.getElementById('config-output').style.display = 'block';
+            document.getElementById('btn-copy-config').style.display = 'block';
+        }
+
+        function copyConfig() {
+            const textarea = document.getElementById('config-output');
+            textarea.select();
+            document.execCommand('copy');
+            alert('✅ Kode berhasil disalin!\n\nLANGKAH SELANJUTNYA:\n1. Buka repository GitHub Anda.\n2. Edit file index.html.\n3. Cari baris yang dimulai dengan "let CONFIG = {".\n4. Hapus blok CONFIG lama, lalu Paste (Tempel) kode yang baru saja Anda salin.\n5. Klik "Commit changes".\n\nPerubahan sekarang permanen untuk semua orang!');
+        }
+    </script>
 </body>
 </html>
