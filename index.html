@@ -163,23 +163,30 @@
     </div>
 
     <!-- COVER -->
-    <section id="cover">
-        <div class="frame-corner frame-tl"></div><div class="frame-corner frame-tr"></div>
-        <div class="frame-corner frame-bl"></div><div class="frame-corner frame-br"></div>
-        <div class="content-wrapper animate__animated animate__fadeIn">
-            <div class="font-arabic" style="font-size: 2.2rem; margin-bottom: 15px; color: var(--primary-light);">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
-            <p style="letter-spacing: 3px; font-size: 0.85rem; text-transform: uppercase; opacity: 0.9;">The Wedding Of</p>
-            <h1 id="display-couple-names">Aspiyanor & Radina</h1>
-            <p style="font-size: 1.1rem; margin: 10px 0; font-family: var(--font-heading);" id="display-date">Sabtu, 25 Oktober 2026</p>
-            <div class="guest-box animate__animated animate__fadeInUp animate__delay-1s">
-                <p style="font-size: 0.9rem; margin-bottom: 5px; opacity: 0.9;">Kepada Yth. Bapak/Ibu/Saudara/i</p>
-                <div id="guest-name" class="guest-name">Tamu Undangan</div>
-            </div>
-            <button class="btn-gold animate__animated animate__fadeInUp animate__delay-2s" onclick="scrollToContent()">
-                <i class="fas fa-arrow-down"></i> Lihat Undangan
-            </button>
+   <section id="cover">
+    <div class="frame-corner frame-tl"></div><div class="frame-corner frame-tr"></div>
+    <div class="frame-corner frame-bl"></div><div class="frame-corner frame-br"></div>
+    <div class="content-wrapper animate__animated animate__fadeIn">
+        <div class="font-arabic" style="font-size: 2.2rem; margin-bottom: 15px; color: #f3e5ab; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+        <p style="letter-spacing: 3px; font-size: 0.85rem; text-transform: uppercase; opacity: 0.95; color: #ffffff;">The Wedding Of</p>
+        
+        <!-- Nama Pasangan Mempelai -->
+        <h1 id="display-couple-names" style="color: #ffffff; font-size: 2.5rem; font-weight: 700; margin: 10px 0; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7); filter: drop-shadow(0 0 2px rgba(0,0,0,0.8));">Aspiyanor & Radina</h1>
+        
+        <p style="font-size: 1.1rem; margin: 10px 0; font-family: var(--font-heading); color: #f3e5ab; text-shadow: 0 1px 3px rgba(0,0,0,0.5);" id="display-date">Sabtu, 25 Oktober 2026</p>
+        
+        <div class="guest-box animate__animated animate__fadeInUp animate__delay-1s" style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 215, 0, 0.4); padding: 15px; border-radius: 10px; margin: 15px 0;">
+            <p style="font-size: 0.9rem; margin-bottom: 5px; opacity: 0.95; color: #ffffff;">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+            
+            <!-- Nama Tamu Undangan -->
+            <div id="guest-name" class="guest-name" style="color: #ffd700; font-size: 1.4rem; font-weight: 700; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); margin-top: 5px;">Tamu Undangan</div>
         </div>
-    </section>
+        
+        <button class="btn-gold animate__animated animate__fadeInUp animate__delay-2s" onclick="scrollToContent()">
+            <i class="fas fa-arrow-down"></i> Lihat Undangan
+        </button>
+    </div>
+</section>
 
     <!-- MEMPELAI PRIA -->
     <section id="section-groom">
@@ -468,7 +475,7 @@
         let CONFIG = {
             coupleNames: "Aspiyanor & Radina",
             date: "Minggu, 25 Oktober 2026",
-            hijriah: "13 Jumadil Awal 1448 H",
+            hijriah: "13-14 Jumadil Awal 1448 H",
             time: "Pukul 08:00 WITA - Selesai",
             venue: "Rumah Kediaman Mempelai",
             address: "RT 5, Desa Darussalam, Kec. Danau Panggang, Kab. Hulu Sungai Utara (HSU), Kalimantan Selatan",
